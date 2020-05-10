@@ -1,16 +1,36 @@
 import Card from "../components/Card";
+import { withApollo } from '../apollo/apollo';
+import { useQuery } from '@apollo/react-hooks';
+import { ALL_CHARACTERS } from '../queries/charecterQueries'
+import React from "react";
 
-export default function IndexPage() {
+const IndexPage = () => {
+  const { data, loading, error } = useQuery(ALL_CHARACTERS);
+  if (error) return <h1>Error</h1>;
+  if (loading) return <h1>... Loading</h1>
+
+
   return (
-    <>
-    <div class=" bg-gray-200 h-screen w-screen">
-      <div class="shadow-lg hero bg-blue-200">
-        <h1 class="title">Apollo with Next.js</h1>
+    <div className=" bg-gray-200 h-auto w-auto">
+      <div className="shadow-lg hero bg-blue-200">
+        <h1 className="title">Apollo with Next.js</h1>
       </div>
-      <div class="flex justify-center">
+      <div className="flex justify-center">
         <Card link={'/page1'} heading={'Card Heading'} text={'Click Me to head on over to page 1'}/>
+        <div>
+          {data.characters.results.map((data) => {
+            console.log(data);
+            return (
+
+                <ul key={data.id}>
+                  <li>{data.name}</li>
+                </ul>
+            )
+          })}
+        </div>
       </div>
     </div>
-    </>
   )
-}
+};
+
+export default withApollo({ ssr: true })(IndexPage);
