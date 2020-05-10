@@ -76,7 +76,7 @@ const id = () => {
         </div>
         <div className="mx-2">
           <span className="underline text-xl">
-            Episodes:
+            Episodes: {character.episode.length}
           </span>
           <br/>
           {
