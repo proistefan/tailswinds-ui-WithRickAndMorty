@@ -1,11 +1,13 @@
 import gql from 'graphql-tag';
 
 export const ALL_CHARACTERS = gql`
-    query allCharacters {
-        characters {
-            results {
+    query{
+        characters{
+            results{
                 id
                 name
+                image
+                status
             }
         }
     }

@@ -15,20 +15,19 @@ const IndexPage = () => {
       <div className="shadow-lg hero bg-blue-200">
         <h1 className="title">Apollo with Next.js</h1>
       </div>
-      <div className="flex justify-center">
-        <Card link={'/page1'} heading={'Card Heading'} text={'Click Me to head on over to page 1'}/>
-        <div>
+        <div className="grid grid-cols-4">
           {data.characters.results.map((data) => {
             console.log(data);
             return (
-
-                <ul key={data.id}>
-                  <li>{data.name}</li>
-                </ul>
+              <Card
+                heading={data.name}
+                text={data.status}
+                img={data.image}
+                key={data.id}
+              />
             )
           })}
         </div>
-      </div>
     </div>
   )
 };
