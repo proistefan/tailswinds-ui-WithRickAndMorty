@@ -44,8 +44,6 @@ const id = () => {
 
   const character = data.character || {};
 
-  console.log(character)
-
   return (
     <>
     <div className="Hero font-mono text-lg py-2">
