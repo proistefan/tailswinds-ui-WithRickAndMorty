@@ -1,7 +1,7 @@
 import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
 import { useQuery } from '@apollo/react-hooks';
-import { ALL_CHARACTERS } from '../queries/charecterQueries'
+import { ALL_CHARACTERS } from '../queries/characterQueries'
 import React from "react";
 
 const IndexPage = () => {
@@ -11,19 +11,19 @@ const IndexPage = () => {
 
 
   return (
-    <div className=" bg-gray-200 h-auto w-auto">
+    <div className="bg-gray-200 h-auto w-auto">
       <div className="shadow-lg hero bg-blue-200">
         <h1 className="title">Apollo with Next.js</h1>
       </div>
-        <div className="sm:grid sm:grid-cols-1 md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
+        <div className="sm:flex sm:flex-col sm:justify-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
           {data.characters.results.map((data) => {
-            console.log(data);
             return (
               <Card
                 heading={data.name}
                 text={data.status}
                 img={data.image}
                 key={data.id}
+                id={data.id}
               />
             )
           })}
