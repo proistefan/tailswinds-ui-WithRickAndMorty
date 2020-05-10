@@ -57,7 +57,7 @@ const id = () => {
       <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}}/>
       <div className="flex font-mono " >
         <div>
-          <img className="w-14 h-14" src={character.image} alt="Rick Sanchez" />
+          <img className="w-14 h-14" src={character.image} alt={character.name} />
         </div>
         <div className="flex flex-col mx-2">
           <div>
