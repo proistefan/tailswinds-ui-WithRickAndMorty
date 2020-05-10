@@ -47,9 +47,58 @@ const id = () => {
   console.log(character)
 
   return (
-    <div>
-      {character.name}
+    <>
+    <div className="Hero font-mono text-lg py-2">
+      <div className="title">
+        {character.name}
+      </div>
     </div>
+      <br/>
+      <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}}/>
+      <div className="flex font-mono " >
+        <div>
+          <img className="w-14 h-14" src={character.image} alt="Rick Sanchez" />
+        </div>
+        <div className="flex flex-col mx-2">
+          <div>
+            <span className="underline text-xl">Information:</span>
+          </div>
+          <div>
+            Gender: {character.gender}
+          </div>
+          <div>
+            Species: {character.species}
+          </div>
+          <div>
+            Origin: {character.origin.name}
+          </div>
+          <div className="text-red-500 underline">
+            Status: {character.status}
+          </div>
+        </div>
+        <div className="mx-2">
+          <span className="underline text-xl">
+            Episodes:
+          </span>
+          <br/>
+          {
+            character.episode.map((episode) => {
+              return(
+                <div key={episode.id}>
+                  <div className="flex flex-col">
+                    --
+                    <br/>
+                    Name: {episode.name}
+                    <br/>
+                    AirDate: {episode.air_date}
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
+    </>
   )
 
 }
