@@ -1,4 +1,5 @@
 import Card from "../components/Card";
+import DefaultCard from '../components/DefaultCard'
 import { withApollo } from '../apollo/apollo';
 import { useQuery } from '@apollo/react-hooks';
 import { ALL_CHARACTERS } from '../queries/characterQueries'
@@ -29,7 +30,7 @@ const IndexPage = () => {
               <Card
                 heading={data.name}
                 text={data.status}
-                img={data.image}
+                img={loading ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />

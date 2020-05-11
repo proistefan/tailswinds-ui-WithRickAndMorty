@@ -74,7 +74,7 @@ const episode = () => {
               <Card
                 heading={data.name}
                 text={data.status}
-                img={data.image}
+                img={loading ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />
