@@ -17,7 +17,7 @@ const IndexPage = () => {
         <h1 className="title">Rick & Morty</h1>
         <h3 className="flex justify-center"> with Next.js, Apollo GraphQL</h3>
         <h3 className="flex justify-center">and Tailwind CSS</h3>
-        <h3 className="flex justify-center">
+        <h3 className="flex justify-center underline">
           <a href={'https://github.com/MuddyBootsCode/tailswinds-ui'}>
             Git Repo here
           </a>

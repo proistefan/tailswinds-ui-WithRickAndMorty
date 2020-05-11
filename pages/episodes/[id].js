@@ -3,7 +3,6 @@ import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
 import { useRouter } from 'next/router';
 import gql from 'graphql-tag';
-import Link from 'next/link';
 import Card from "../../components/Card";
 
 const GET_EPISODE =  gql`
