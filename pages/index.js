@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/react-hooks';
 import React from "react";
 import gql from 'graphql-tag';
 
-
 const ALL_CHARACTERS = gql`
     query{
         characters{
@@ -20,8 +19,8 @@ const ALL_CHARACTERS = gql`
 
 const IndexPage = () => {
   const { data, loading, error } = useQuery(ALL_CHARACTERS);
-  if (error) return <h1>Error</h1>;
-  if (loading) return <h1>... Loading</h1>
+  if (error) return <h1 className="flex justify-center">Error</h1>;
+  if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
 
 
   return (

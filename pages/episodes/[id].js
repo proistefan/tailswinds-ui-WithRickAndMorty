@@ -29,7 +29,7 @@ const episode = () => {
     variables: {id: router.query.id}
   });
 
-  if (loading) return <div className="flex justify-center">...Loading</div>;
+  if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
   if (error) return <div>{Error.toString()}</div>
 
   const episode = data.episode || {};

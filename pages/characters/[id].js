@@ -39,7 +39,7 @@ const character = () => {
   });
 
 
-  if (loading) return <div>...Loading</div>;
+  if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
   if (error) return <div>{Error.toString()}</div>
 
   const character = data.character || {};
