@@ -1,8 +1,22 @@
 import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
 import { useQuery } from '@apollo/react-hooks';
-import { ALL_CHARACTERS } from '../queries/characterQueries'
 import React from "react";
+import gql from 'graphql-tag';
+
+
+const ALL_CHARACTERS = gql`
+    query{
+        characters{
+            results{
+                id
+                name
+                image
+                status
+            }
+        }
+    }
+`;
 
 const IndexPage = () => {
   const { data, loading, error } = useQuery(ALL_CHARACTERS);
