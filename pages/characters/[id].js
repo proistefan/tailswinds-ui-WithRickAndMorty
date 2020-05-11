@@ -44,9 +44,21 @@ const character = () => {
 
   const character = data.character || {};
 
+  const handleClick = e => {
+    e.preventDefault()
+    router.push('/')
+  }
+
   return (
     <>
     <div className="Hero font-mono text-lg py-2">
+      <button
+        onClick={handleClick}
+        className="text-black hover:bg-black hover:text-white font-mono py-2
+         px-4 border border-black rounded m-2"
+      >
+        Home
+      </button>
       <div className="title">
         {character.name}
       </div>

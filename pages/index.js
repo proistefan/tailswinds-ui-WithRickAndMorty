@@ -12,7 +12,7 @@ const IndexPage = () => {
 
   return (
     <div className="bg-gray-200 h-auto w-auto">
-      <div className="shadow-lg hero bg-blue-200">
+      <div className="shadow-lg hero bg-grey-500">
         <h1 className="title">Apollo - Next.js - TailWind Css Also Rick & Morty</h1>
       </div>
         <div className="sm:flex sm:flex-col sm:justify-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
