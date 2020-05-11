@@ -55,7 +55,7 @@ const character = () => {
       <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}}/>
       <div className="sm:gird sm:grid-cols-1 md:flex lg:flex font-mono " >
         <div className="align-center content-center mx-2">
-          <img className="h-14 w-14" src={character.image} alt={character.name} />
+          <img className="h-14 w-14 shadow-lg" src={character.image} alt={character.name} />
         </div>
         <div className="flex flex-col mx-2">
           <div>
@@ -77,18 +77,18 @@ const character = () => {
           <hr/>
         </div>
         <div className="mx-2">
-          <span className="underline text-xl">
+          <span className="underline text-xl content-center">
             Episodes: {character.episode.length}
           </span>
           <br/>
           {
             character.episode.map((episode) => {
               return(
-                <div key={episode.id}>
-                  <Link href={`/episodes/${episode.id}`} >
+                <div key={episode.id} className="border-gray-600 border rounded px-4 py-2 my-1 shadow
+                hover:bg-black hover:text-white duration-300">
+                  <Link href={`/episodes/${episode.id}`}>
                     <a>
                       <div className="flex flex-col">
-                        --
                         <br/>
                         Name: {episode.name}
                         <br/>
