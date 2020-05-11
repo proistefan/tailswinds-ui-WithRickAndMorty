@@ -12,8 +12,16 @@ const IndexPage = () => {
 
   return (
     <div className="bg-gray-200 h-auto w-auto">
-      <div className="shadow-lg hero bg-grey-500">
-        <h1 className="title">Apollo - Next.js - TailWind Css Also Rick & Morty</h1>
+      <div className="shadow-lg hero bg-blue-500 font-mono text-white">
+        <h1 className="title">Rick & Morty</h1>
+        <h3 className="flex justify-center"> with Next.js, Apollo GraphQL</h3>
+        <h3 className="flex justify-center">and Tailwind CSS</h3>
+        <h3 className="flex justify-center">
+          <a href={'https://github.com/MuddyBootsCode/tailswinds-ui'}>
+            Git Repo here
+          </a>
+        </h3>
+
       </div>
         <div className="sm:flex sm:flex-col sm:justify-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
           {data.characters.results.map((data) => {
