@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Card from "../../components/Card";
 import apolloClient from "../../apolloClient";
-import {ALL_EPISODE_IDS, GET_EPISODE} from "../../queries/episodeQueries";
+import { ALL_EPISODE_IDS, GET_EPISODE } from "../../queries/episodeQueries";
 
 export async function getStaticPaths(ctx) {
   const client = await apolloClient(ctx)
@@ -17,7 +17,7 @@ export async function getStaticPaths(ctx) {
     params: { id: post.id },
   }))
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params }, ctx) {
@@ -43,6 +43,9 @@ const episode = ({ episode, loading, error }) => {
 
   if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
   if (error) return <div>{Error.toString()}</div>
+  if (router.isFallback) {
+    return <div className="flex items-center justify-center title">Loading...</div>
+  }
 
   const handleClick = e => {
     e.preventDefault()

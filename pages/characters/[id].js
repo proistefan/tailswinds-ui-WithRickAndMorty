@@ -18,7 +18,7 @@ export async function getStaticPaths(ctx) {
     params: { id: post.id },
   }))
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params }, ctx) {
@@ -44,6 +44,9 @@ const character = ({ character, loading, error }) => {
 
   if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
   if (error) return <div>{Error.toString()}</div>
+  if (router.isFallback) {
+    return <div className="flex items-center justify-center title">Loading...</div>
+  }
 
   const handleClick = e => {
     e.preventDefault()
