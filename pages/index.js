@@ -1,6 +1,7 @@
 import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
-import React from "react";
+import React, {useEffect, useState} from "react";
+import _, {debounce} from 'lodash';
 import apolloClient from "../apolloClient";
 import {ALL_CHARACTERS} from "../queries/characterQueries";
 
@@ -37,6 +38,32 @@ export async function getStaticProps() {
 
 const IndexPage = ({ characters }) => {
 
+  const [chars, setChars] = useState(characters);
+
+  const [lookup, setLookup] = useState('');
+
+  useEffect(() => {
+    const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
+
+    // const results = chars.filter(char => char.name.toLowerCase().includes(lookup.toLowerCase()))
+    setChars(res);
+  }, [lookup]);
+
+  const handleChange = e => {
+    debounce(
+      (e) => setLookup(e.target.value), 100
+    )
+    setLookup(e.target.value);
+    if (e.target.value === ''){
+      setChars(characters)
+    }
+  };
+
+  const handleClick = e => {
+    e.preventDefault()
+    setChars(characters)
+  };
+
   // if (error) return <h1 className="flex justify-center">Error</h1>;
   // if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
 
@@ -51,10 +78,25 @@ const IndexPage = ({ characters }) => {
             Git Repo here
           </a>
         </h3>
-
+      </div>
+      <br/>
+      <div className="flex justify-center">
+        <input
+          className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="username" type="text" placeholder="Character Search"
+          value={lookup}
+          onChange={handleChange}
+        />
+        <button
+          className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
+         px-4 border border-black rounded m-2"
+          onClick={handleClick}
+        >
+          Reset Search
+        </button>
       </div>
         <div className="sm:flex sm:flex-col sm:justify-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
-          {characters.map((data) => {
+          {chars.map((data) => {
             return (
               <Card
                 heading={data.name}
