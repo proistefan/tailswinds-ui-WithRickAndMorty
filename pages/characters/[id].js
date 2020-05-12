@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import apolloClient from "../../apolloClient";
-import {ALL_CHARACTER_IDS, GET_CHARACTER} from "../../queries/characterQueries";
+import {ALL_CHARACTER_IDS, GET_CHARACTER, GET_CHARACTER_IDS_BY_PAGE} from "../../queries/characterQueries";
 
 
 export async function getStaticPaths(ctx) {
@@ -12,7 +12,7 @@ export async function getStaticPaths(ctx) {
     query: ALL_CHARACTER_IDS
   })
 
-  const { results } = response.data.characters;
+  let { results } = response.data.characters;
 
   const paths = results.map(post => ({
     params: { id: post.id },

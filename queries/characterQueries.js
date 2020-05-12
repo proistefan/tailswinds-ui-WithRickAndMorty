@@ -25,9 +25,30 @@ export const GET_CHARACTER =  gql`
     }
 `;
 
+export const GET_CHARACTER_IDS_BY_PAGE = gql`
+    query characters($page: Int){
+        characcters(page: $page){
+            info{
+                count
+                pages
+                next
+                prev
+            }
+            results{
+                id
+            }
+        }
+    }
+`;
+
 export const ALL_CHARACTERS = gql`
     query{
         characters{
+            info{
+                pages
+                next
+                prev
+            }
             results{
                 id
                 name
@@ -41,6 +62,9 @@ export const ALL_CHARACTERS = gql`
 export const ALL_CHARACTER_IDS = gql`
     query{
         characters{
+            info{
+                pages
+            }
             results{
                 id
             }
