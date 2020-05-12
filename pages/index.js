@@ -25,17 +25,17 @@ export async function getStaticProps(ctx) {
 
   return {
     props: {
-      response
+      characters: response.data.characters.results,
+      loading: response.loading,
+      error: !response.error ? null : response.error
     },
   }
 }
 
-const IndexPage = ({ response }) => {
+const IndexPage = ({ characters, loading, error }) => {
 
-  if (response.error) return <h1 className="flex justify-center">Error</h1>;
-  if (response.loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
-
-  const characters = response.data.characters.results || [];
+  if (error) return <h1 className="flex justify-center">Error</h1>;
+  if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
 
   return (
     <div className="bg-gray-200 h-auto w-auto">
@@ -56,7 +56,7 @@ const IndexPage = ({ response }) => {
               <Card
                 heading={data.name}
                 text={data.status}
-                img={response.loading ? '/rickandmorty.jpg' : data.image}
+                img={loading ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />
