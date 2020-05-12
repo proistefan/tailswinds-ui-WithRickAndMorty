@@ -64,6 +64,7 @@ export const ALL_CHARACTER_IDS = gql`
         characters{
             info{
                 pages
+                count
             }
             results{
                 id

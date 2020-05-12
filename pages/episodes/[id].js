@@ -11,10 +11,12 @@ export async function getStaticPaths(ctx) {
     query: ALL_EPISODE_IDS
   })
 
-  const { results } = response.data.episodes;
+  const { count } = response.data.episodes.info;
 
-  const paths = results.map(post => ({
-    params: { id: post.id },
+  const ids = [...Array(count).keys()];
+
+  const paths = ids.map(id => ({
+    params: { id: `${id}` },
   }))
 
   return { paths, fallback: true }

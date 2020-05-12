@@ -19,6 +19,9 @@ export const GET_EPISODE =  gql`
 export const ALL_EPISODE_IDS = gql`
     query{
         episodes{
+            info{
+                count
+            }
             results{
                 id
         }

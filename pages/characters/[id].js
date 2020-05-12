@@ -12,10 +12,12 @@ export async function getStaticPaths(ctx) {
     query: ALL_CHARACTER_IDS
   })
 
-  let { results } = response.data.characters;
+  const { count } = response.data.characters.info;
 
-  const paths = results.map(post => ({
-    params: { id: post.id },
+  const ids = [...Array(count).keys()];
+
+  const paths = ids.map(id => ({
+    params: { id: `${id}` },
   }))
 
   return { paths, fallback: true }
