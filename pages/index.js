@@ -4,26 +4,41 @@ import React from "react";
 import apolloClient from "../apolloClient";
 import {ALL_CHARACTERS} from "../queries/characterQueries";
 
+export async function getStaticProps() {
+  const ids = [...Array(591).keys()];
+  const characterUrl = `https://rickandmortyapi.com/api/character/${ids.join(",")}`
 
-export async function getStaticProps(ctx) {
-  const client = await apolloClient(ctx)
-  const response = await client.query({
-    query: ALL_CHARACTERS
-  })
+  const res = await fetch(characterUrl);
 
-  return {
-    props: {
-      characters: response.data.characters.results,
-      loading: response.loading,
-      error: !response.error ? null : response.error
-    },
+  const characters = await res.json()
+
+  return{
+    props:{
+      characters
+    }
   }
 }
 
-const IndexPage = ({ characters, loading, error }) => {
+// For GraphQL API - haven't figured out how to stream results
+// export async function getStaticProps(ctx) {
+//   const client = await apolloClient(ctx)
+//   const response = await client.query({
+//     query: ALL_CHARACTERS
+//   })
+//
+//   return {
+//     props: {
+//       characters: response.data.characters.results,
+//       loading: response.loading,
+//       error: !response.error ? null : response.error
+//     },
+//   }
+// }
 
-  if (error) return <h1 className="flex justify-center">Error</h1>;
-  if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
+const IndexPage = ({ characters }) => {
+
+  // if (error) return <h1 className="flex justify-center">Error</h1>;
+  // if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
 
   return (
     <div className="bg-gray-200 h-auto w-auto">
@@ -44,7 +59,7 @@ const IndexPage = ({ characters, loading, error }) => {
               <Card
                 heading={data.name}
                 text={data.status}
-                img={loading ? '/rickandmorty.jpg' : data.image}
+                img={!data.image ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />

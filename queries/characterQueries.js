@@ -45,9 +45,7 @@ export const ALL_CHARACTERS = gql`
     query{
         characters{
             info{
-                pages
-                next
-                prev
+                count
             }
             results{
                 id
