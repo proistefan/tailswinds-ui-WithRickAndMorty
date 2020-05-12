@@ -1,48 +1,45 @@
 import { withApollo } from '../../apollo/apollo.js';
-import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
 import { useRouter } from 'next/router';
-import gql from 'graphql-tag';
 import Link from 'next/link';
+import apolloClient from "../../apolloClient";
+import {ALL_CHARACTER_IDS, GET_CHARACTER} from "../../queries/characterQueries";
 
-const GET_CHARACTER =  gql`
-    query character($id: ID!){
-        character(id: $id){
-            id
-            name
-            name
-            status
-            species
-            type
-            gender
-            origin{
-                name
-            }
-            image
-            episode {
-                id
-                name
-                air_date
-                episode
-            }
-            created
-        }
-    }
-`;
 
-const character = () => {
+export async function getStaticPaths(ctx) {
+  const client = await apolloClient(ctx)
+  const response = await client.query({
+    query: ALL_CHARACTER_IDS
+  })
+
+  const { results } = response.data.characters;
+
+  const paths = results.map(post => ({
+    params: { id: post.id },
+  }))
+
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps({ params }, ctx) {
+  console.log(params, ' inside get static props')
+  const client = await apolloClient(ctx)
+  const response = await client.query({
+    query: GET_CHARACTER,
+    variables: {id: `${params.id}`}
+  })
+
+  const { character } = response.data;
+
+  return { props: { character, loading: response.loading, error: !response.error ? null : response.error } }
+}
+
+const character = ({ character, loading, error }) => {
 
   const router = useRouter();
 
-  const { data, loading, error } = useQuery(GET_CHARACTER, {
-    variables: {id: router.query.id}
-  });
-
-
   if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
   if (error) return <div>{Error.toString()}</div>
-
-  const character = data.character || {};
 
   const handleClick = e => {
     e.preventDefault()
