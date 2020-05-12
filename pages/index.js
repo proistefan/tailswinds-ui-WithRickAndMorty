@@ -1,21 +1,9 @@
 import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
 import React from "react";
-import gql from 'graphql-tag';
 import apolloClient from "../apolloClient";
+import {ALL_CHARACTERS} from "../queries/characterQueries";
 
-const ALL_CHARACTERS = gql`
-    query{
-        characters{
-            results{
-                id
-                name
-                image
-                status
-            }
-        }
-    }
-`;
 
 export async function getStaticProps(ctx) {
   const client = await apolloClient(ctx)

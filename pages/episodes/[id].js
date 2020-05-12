@@ -56,10 +56,10 @@ const episode = ({ episode, loading, error }) => {
 
   return (
     <>
-      <div className="Hero font-mono text-lg py-2">
+      <div className="Hero font-mono text-lg py-2 bg-blue-500">
         <button
           onClick={handleClick}
-          className="text-black hover:bg-black hover:text-white font-mono py-2
+          className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
          px-4 border border-black rounded m-2"
         >
           Home
@@ -74,6 +74,9 @@ const episode = ({ episode, loading, error }) => {
           <div className="flex justify-center">
             {episode.air_date}
           </div>
+          <br/>
+          <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}} />
+          <br/>
         </div>
       </div>
       <hr/>

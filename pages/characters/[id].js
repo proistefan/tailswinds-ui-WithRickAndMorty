@@ -57,10 +57,10 @@ const character = ({ character, loading, error }) => {
 
   return (
     <>
-    <div className="Hero font-mono text-lg py-2">
+    <div className="Hero font-mono text-lg py-2 bg-blue-500">
       <button
         onClick={handleClick}
-        className="text-black hover:bg-black hover:text-white font-mono py-2
+        className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
          px-4 border border-black rounded m-2"
       >
         Home
@@ -68,9 +68,11 @@ const character = ({ character, loading, error }) => {
       <div className="title">
         {character.name}
       </div>
-    </div>
       <br/>
       <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}}/>
+      <br/>
+    </div>
+      <br/>
       <div className="sm:gird sm:grid-cols-1 md:flex lg:flex font-mono " >
         <div className="align-center content-center mx-2">
           <img className="h-14 w-14 shadow-lg" src={character.image} alt={character.name} />
