@@ -1,38 +1,48 @@
 import { withApollo } from '../../apollo/apollo.js';
-import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
 import { useRouter } from 'next/router';
-import gql from 'graphql-tag';
 import Card from "../../components/Card";
+import apolloClient from "../../apolloClient";
+import {ALL_EPISODE_IDS, GET_EPISODE} from "../../queries/episodeQueries";
 
-const GET_EPISODE =  gql`
-    query episode($id: ID!){
-        episode(id: $id){
-            id
-            name
-            air_date
-            episode
-            characters{
-                id
-                name
-                image
-            }
-        }
+export async function getStaticPaths(ctx) {
+  const client = await apolloClient(ctx)
+  const response = await client.query({
+    query: ALL_EPISODE_IDS
+  })
+
+  const { results } = response.data.episodes;
+
+  const paths = results.map(post => ({
+    params: { id: post.id },
+  }))
+
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps({ params }, ctx) {
+  const client = await apolloClient(ctx)
+  const response = await client.query({
+    query: GET_EPISODE,
+    variables: {id: `${params.id}`}
+  })
+
+  const { episode } = response.data;
+
+  return { props: {
+      episode,
+      loading: response.loading,
+      error: !response.error ? null : response.error
     }
-`;
+  }
+}
 
-const episode = () => {
+const episode = ({ episode, loading, error }) => {
 
   const router = useRouter();
 
-  const { data, loading, error } = useQuery(GET_EPISODE, {
-    variables: {id: router.query.id}
-  });
-
   if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
   if (error) return <div>{Error.toString()}</div>
-
-  const episode = data.episode || {};
 
   const handleClick = e => {
     e.preventDefault()
@@ -85,4 +95,4 @@ const episode = () => {
   );
 };
 
-export default withApollo({ssr: true})(episode);
+export default withApollo({ssr: false})(episode);

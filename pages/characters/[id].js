@@ -22,7 +22,6 @@ export async function getStaticPaths(ctx) {
 }
 
 export async function getStaticProps({ params }, ctx) {
-  console.log(params, ' inside get static props')
   const client = await apolloClient(ctx)
   const response = await client.query({
     query: GET_CHARACTER,
@@ -31,7 +30,12 @@ export async function getStaticProps({ params }, ctx) {
 
   const { character } = response.data;
 
-  return { props: { character, loading: response.loading, error: !response.error ? null : response.error } }
+  return { props: {
+    character,
+    loading: response.loading,
+    error: !response.error ? null : response.error
+    }
+  }
 }
 
 const character = ({ character, loading, error }) => {
