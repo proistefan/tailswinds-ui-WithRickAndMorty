@@ -1,8 +1,8 @@
 import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
-import { useQuery } from '@apollo/react-hooks';
 import React from "react";
 import gql from 'graphql-tag';
+import apolloClient from "../apolloClient";
 
 const ALL_CHARACTERS = gql`
     query{
@@ -17,11 +17,25 @@ const ALL_CHARACTERS = gql`
     }
 `;
 
-const IndexPage = () => {
-  const { data, loading, error } = useQuery(ALL_CHARACTERS);
-  if (error) return <h1 className="flex justify-center">Error</h1>;
-  if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
+export async function getStaticProps(ctx) {
+  const client = await apolloClient(ctx)
+  const response = await client.query({
+    query: ALL_CHARACTERS
+  })
 
+  return {
+    props: {
+      response
+    },
+  }
+}
+
+const IndexPage = ({ response }) => {
+
+  if (response.error) return <h1 className="flex justify-center">Error</h1>;
+  if (response.loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
+
+  const characters = response.data.characters.results || [];
 
   return (
     <div className="bg-gray-200 h-auto w-auto">
@@ -37,12 +51,12 @@ const IndexPage = () => {
 
       </div>
         <div className="sm:flex sm:flex-col sm:justify-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
-          {data.characters.results.map((data) => {
+          {characters.map((data) => {
             return (
               <Card
                 heading={data.name}
                 text={data.status}
-                img={loading ? '/rickandmorty.jpg' : data.image}
+                img={response.loading ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />
@@ -53,4 +67,4 @@ const IndexPage = () => {
   )
 };
 
-export default withApollo({ ssr: true })(IndexPage);
+export default withApollo({ ssr: false })(IndexPage);
