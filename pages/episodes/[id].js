@@ -16,7 +16,7 @@ export async function getStaticPaths(ctx) {
   const ids = [...Array(count).keys()];
 
   const paths = ids.map(id => ({
-    params: { id: `${id}` },
+    params: { id: `${id + 1}` },
   }))
 
   return { paths, fallback: true }
