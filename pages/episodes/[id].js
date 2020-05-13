@@ -54,30 +54,30 @@ const episode = ({ episode, loading, error }) => {
     router.push('/')
   }
 
-  const [chars, setChars] = useState(episode.characters);
-
-  const [lookup, setLookup] = useState('');
-
-  useEffect(() => {
-    const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
-
-    setChars(res);
-  }, [lookup]);
-
-  const handleChange = e => {
-    debounce(
-        (e) => setLookup(e.target.value), 100
-    )
-    setLookup(e.target.value);
-    if (e.target.value === ''){
-      setChars(episode.characters)
-    }
-  };
-
-  const handleResetClick = e => {
-    e.preventDefault()
-    setChars(episode.characters)
-  }
+  // const [chars, setChars] = useState(episode.characters);
+  //
+  // const [lookup, setLookup] = useState('');
+  //
+  // useEffect(() => {
+  //   const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
+  //
+  //   setChars(res);
+  // }, [lookup]);
+  //
+  // const handleChange = e => {
+  //   debounce(
+  //       (e) => setLookup(e.target.value), 100
+  //   )
+  //   setLookup(e.target.value);
+  //   if (e.target.value === ''){
+  //     setChars(episode.characters)
+  //   }
+  // };
+  //
+  // const handleResetClick = e => {
+  //   e.preventDefault()
+  //   setChars(episode.characters)
+  // }
 
   return (
     <>
@@ -109,21 +109,21 @@ const episode = ({ episode, loading, error }) => {
         <div className="font-mono title">
           Cast
         </div>
-        <div className="flex justify-center">
-          <input
-              className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username" type="text" placeholder="Character Search"
-              value={lookup}
-              onChange={handleChange}
-          />
-          <button
-              className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
-         px-4 border border-black rounded m-2"
-              onClick={handleResetClick}
-          >
-            Reset Search
-          </button>
-        </div>
+        {/*<div className="flex justify-center">*/}
+        {/*  <input*/}
+        {/*      className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"*/}
+        {/*      id="username" type="text" placeholder="Character Search"*/}
+        {/*      value={lookup}*/}
+        {/*      onChange={handleChange}*/}
+        {/*  />*/}
+        {/*  <button*/}
+        {/*      className="text-black bg-white hover:bg-black hover:text-white font-mono py-2*/}
+        {/* px-4 border border-black rounded m-2"*/}
+        {/*      onClick={handleResetClick}*/}
+        {/*  >*/}
+        {/*    Reset Search*/}
+        {/*  </button>*/}
+        {/*</div>*/}
         <div className="sm:flex sm:flex-col sm:justify-center sm:content-center
          sm:items-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
           {chars.map((data) => {
