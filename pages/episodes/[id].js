@@ -42,14 +42,14 @@ export async function getStaticProps({ params }, ctx) {
 
 const episode = ({ episode, loading, error }) => {
 
-  const [chars, setChars] = useState(episode.characters);
-
-  const [lookup, setLookup] = useState('');
-
-  useEffect(() => {
-    const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
-    setChars(res);
-  }, [lookup]);
+  // const [chars, setChars] = useState(episode.characters);
+  //
+  // const [lookup, setLookup] = useState('');
+  //
+  // useEffect(() => {
+  //   const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
+  //   setChars(res);
+  // }, [lookup]);
 
 
   const router = useRouter();
