@@ -42,7 +42,9 @@ export async function getStaticProps({ params }, ctx) {
 
 const episode = ({ episode, loading, error }) => {
 
-  // const [chars, setChars] = useState(episode.characters);
+  const { characters } = episode;
+
+  const [episodeCharacters, setChars] = useState(characters);
   //
   // const [lookup, setLookup] = useState('');
   //
