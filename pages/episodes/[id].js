@@ -51,20 +51,6 @@ const episode = ({ episode, loading, error }) => {
     setChars(res);
   }, [lookup]);
 
-  const handleChange = e => {
-    debounce(
-      (e) => setLookup(e.target.value), 100
-    )
-    setLookup(e.target.value);
-    if (e.target.value === ''){
-      setChars(episode.characters)
-    }
-  };
-
-  const handleReset = e => {
-    e.preventDefault()
-    setChars(episode.characters)
-  };
 
   const router = useRouter();
 
