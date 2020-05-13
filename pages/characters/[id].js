@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import apolloClient from "../../apolloClient";
-import {ALL_CHARACTER_IDS, GET_CHARACTER, GET_CHARACTER_IDS_BY_PAGE} from "../../queries/characterQueries";
+import { ALL_CHARACTER_IDS, GET_CHARACTER } from "../../queries/characterQueries";
 
 
 export async function getStaticPaths(ctx) {
@@ -44,10 +44,10 @@ const character = ({ character, loading, error }) => {
 
   const router = useRouter();
 
-  if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
-  if (error) return <div>{Error.toString()}</div>
+
   if (router.isFallback) {
-    return <div className="flex items-center justify-center title">Loading...</div>
+    if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
+    if (error) return <div>{Error.toString()}</div>
   }
 
   const handleClick = e => {

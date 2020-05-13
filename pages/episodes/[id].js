@@ -61,7 +61,6 @@ const episode = ({ episode, loading, error }) => {
   useEffect(() => {
     const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
 
-    // const results = chars.filter(char => char.name.toLowerCase().includes(lookup.toLowerCase()))
     setChars(res);
   }, [lookup]);
 
@@ -132,7 +131,7 @@ const episode = ({ episode, loading, error }) => {
               <Card
                 heading={data.name}
                 text={data.status}
-                img={loading ? '/rickandmorty.jpg' : data.image}
+                img={!data.image ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />
