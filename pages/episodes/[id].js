@@ -42,18 +42,6 @@ export async function getStaticProps({ params }, ctx) {
 
 const episode = ({ episode, loading, error }) => {
 
-  const { characters } = episode;
-
-  const [episodeCharacters, setChars] = useState(characters);
-  //
-  // const [lookup, setLookup] = useState('');
-  //
-  // useEffect(() => {
-  //   const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
-  //   setChars(res);
-  // }, [lookup]);
-
-
   const router = useRouter();
 
   if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
