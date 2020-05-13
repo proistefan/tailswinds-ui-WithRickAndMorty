@@ -54,9 +54,9 @@ const episode = ({ episode, loading, error }) => {
     router.push('/')
   }
 
-  const [characters, setChars] = useState(episode.characters);
+const [characters, setChars] = useState(episode.characters);
 
-  const [lookup, setLookup] = useState('');
+const [lookup, setLookup] = useState('');
 
   useEffect(() => {
     const res = _.filter(characters, char => char.name.toLowerCase().includes(lookup.toLowerCase()))

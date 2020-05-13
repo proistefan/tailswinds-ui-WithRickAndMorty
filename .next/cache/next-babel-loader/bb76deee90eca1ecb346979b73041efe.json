@@ -1,0 +1,1 @@
+{"ast":null,"code":"var __jsx = React.createElement;\nimport React from 'react';\nimport Link from 'next/link';\n\nconst Page1 = () => {\n  return __jsx(\"div\", null, __jsx(Link, {\n    href: '/'\n  }, __jsx(\"a\", null, \"Click to go back home\")));\n};\n\nexport default Page1;","map":null,"metadata":{},"sourceType":"module"}
