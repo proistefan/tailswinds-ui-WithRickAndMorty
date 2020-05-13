@@ -1,10 +1,9 @@
 import { withApollo } from '../../apollo/apollo.js';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Card from "../../components/Card";
 import apolloClient from "../../apolloClient";
 import { ALL_EPISODE_IDS, GET_EPISODE } from "../../queries/episodeQueries";
-import _, {debounce} from "lodash";
 
 export async function getStaticPaths(ctx) {
   const client = await apolloClient(ctx)
@@ -44,39 +43,16 @@ const episode = ({ episode, loading, error }) => {
 
   const router = useRouter();
 
+  if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
+  if (error) return <div>{Error.toString()}</div>
+
   if (router.isFallback) {
-    if (loading) return <div className="flex items-center justify-center title">Loading...</div>
-    if (error) return <div>{Error.toString()}</div>
+    return <div className="flex items-center justify-center title">Loading...</div>
   }
 
   const handleClick = e => {
     e.preventDefault()
     router.push('/')
-  }
-
-const [characters, setChars] = useState(episode.characters);
-
-const [lookup, setLookup] = useState('');
-
-  useEffect(() => {
-    const res = _.filter(characters, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
-
-    setChars(res);
-  }, [lookup]);
-
-  const handleChange = e => {
-    debounce(
-        (e) => setLookup(e.target.value), 100
-    )
-    setLookup(e.target.value);
-    if (e.target.value === ''){
-      setChars(episode.characters)
-    }
-  };
-
-  const handleResetClick = e => {
-    e.preventDefault()
-    setChars(episode.characters)
   }
 
   return (
@@ -109,29 +85,14 @@ const [lookup, setLookup] = useState('');
         <div className="font-mono title">
           Cast
         </div>
-        <div className="flex justify-center">
-          <input
-              className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username" type="text" placeholder="Character Search"
-              value={lookup}
-              onChange={handleChange}
-          />
-          <button
-              className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
-         px-4 border border-black rounded m-2"
-              onClick={handleResetClick}
-          >
-            Reset Search
-          </button>
-        </div>
         <div className="sm:flex sm:flex-col sm:justify-center sm:content-center
          sm:items-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
-          {characters.map((data) => {
+          {episode.characters.map((data) => {
             return (
               <Card
                 heading={data.name}
                 text={data.status}
-                img={!data.image ? '/rickandmorty.jpg' : data.image}
+                img={loading ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />
