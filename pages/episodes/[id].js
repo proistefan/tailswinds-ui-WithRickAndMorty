@@ -12,8 +12,6 @@ export async function getStaticPaths(ctx) {
     query: ALL_EPISODE_IDS
   })
 
-  console.log(client.cache.extract(), ' Cache again')
-
   const { count } = response.data.episodes.info;
 
   const ids = [...Array(count).keys()];
