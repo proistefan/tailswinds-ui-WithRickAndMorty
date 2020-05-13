@@ -35496,7 +35496,7 @@ var ALL_CHARACTER_IDS = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(_temp
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!***********************************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fmbp%2FWebstormProjects%2Ftailswinds-ui%2Fpages%2Findex.js&hotRouterUpdates=true ***!
   \***********************************************************************************************************************************************************/
@@ -35519,5 +35519,5 @@ module.exports = dll_2adc2403d89adc16ead0;
 
 /***/ })
 
-},[[2,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map

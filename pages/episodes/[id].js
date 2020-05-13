@@ -1,9 +1,10 @@
 import { withApollo } from '../../apollo/apollo.js';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/router';
 import Card from "../../components/Card";
 import apolloClient from "../../apolloClient";
 import { ALL_EPISODE_IDS, GET_EPISODE } from "../../queries/episodeQueries";
+import _, {debounce} from "lodash";
 
 export async function getStaticPaths(ctx) {
   const client = await apolloClient(ctx)
@@ -40,6 +41,30 @@ export async function getStaticProps({ params }, ctx) {
 }
 
 const episode = ({ episode, loading, error }) => {
+
+  const [chars, setChars] = useState(episode.characters);
+
+  const [lookup, setLookup] = useState('');
+
+  useEffect(() => {
+    const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
+    setChars(res);
+  }, [lookup]);
+
+  const handleChange = e => {
+    debounce(
+      (e) => setLookup(e.target.value), 100
+    )
+    setLookup(e.target.value);
+    if (e.target.value === ''){
+      setChars(episode.characters)
+    }
+  };
+
+  const handleReset = e => {
+    e.preventDefault()
+    setChars(episode.characters)
+  };
 
   const router = useRouter();
 
@@ -85,9 +110,24 @@ const episode = ({ episode, loading, error }) => {
         <div className="font-mono title">
           Cast
         </div>
+        <div className="flex justify-center">
+          <input
+            className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username" type="text" placeholder="Character Search"
+            value={lookup}
+            onChange={handleChange}
+          />
+          <button
+            className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
+         px-4 border border-black rounded m-2"
+            onClick={handleReset}
+          >
+            Reset Search
+          </button>
+        </div>
         <div className="sm:flex sm:flex-col sm:justify-center sm:content-center
          sm:items-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
-          {episode.characters.map((data) => {
+          {chars.map((data) => {
             return (
               <Card
                 heading={data.name}
