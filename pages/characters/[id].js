@@ -1,9 +1,9 @@
-import { withApollo } from '../../apollo/apollo.js';
+import {withApollo} from '../../apollo/apollo.js';
 import React from 'react';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import Link from 'next/link';
 import apolloClient from "../../apolloClient";
-import { ALL_CHARACTER_IDS, GET_CHARACTER } from "../../queries/characterQueries";
+import {ALL_CHARACTER_IDS, GET_CHARACTER, GET_CHARACTER_IDS_BY_PAGE} from "../../queries/characterQueries";
 
 
 export async function getStaticPaths(ctx) {
@@ -12,41 +12,43 @@ export async function getStaticPaths(ctx) {
     query: ALL_CHARACTER_IDS
   })
 
-  const { count } = response.data.characters.info;
+  const {count} = response.data.characters.info;
 
   const ids = [...Array(count).keys()];
 
   const paths = ids.map(id => ({
-    params: { id: `${id + 1}` },
+    params: {id: `${id + 1}`},
   }))
 
-  return { paths, fallback: true }
+  return {paths, fallback: true}
 }
 
-export async function getStaticProps({ params }, ctx) {
+export async function getStaticProps({params}, ctx) {
   const client = await apolloClient(ctx)
   const response = await client.query({
     query: GET_CHARACTER,
     variables: {id: `${params.id}`}
   })
 
-  const { character } = response.data;
+  const {character} = response.data;
 
-  return { props: {
-    character,
-    loading: response.loading,
-    error: !response.error ? null : response.error
+  return {
+    props: {
+      character,
+      loading: response.loading,
+      error: !response.error ? null : response.error
     }
   }
 }
 
-const character = ({ character, loading, error }) => {
+const character = ({character, loading, error}) => {
 
   const router = useRouter();
 
+  if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
+  if (error) return <div>{Error.toString()}</div>
   if (router.isFallback) {
-    if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
-    if (error) return <div>{Error.toString()}</div>
+    return <div className="flex items-center justify-center title">Loading...</div>
   }
 
   const handleClick = e => {
@@ -56,25 +58,25 @@ const character = ({ character, loading, error }) => {
 
   return (
     <>
-    <div className="Hero font-mono text-lg py-2 bg-blue-500">
-      <button
-        onClick={handleClick}
-        className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
+      <div className="Hero font-mono text-lg py-2 bg-blue-500">
+        <button
+          onClick={handleClick}
+          className="text-black bg-white hover:bg-black hover:text-white font-mono py-2
          px-4 border border-black rounded m-2"
-      >
-        Home
-      </button>
-      <div className="title">
-        {character.name}
+        >
+          Home
+        </button>
+        <div className="title">
+          {character.name}
+        </div>
+        <br/>
+        <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}}/>
+        <br/>
       </div>
       <br/>
-      <hr style={{marginRight: '20%', marginLeft: '20%', border: '1px solid black', marginBottom: '2rem'}}/>
-      <br/>
-    </div>
-      <br/>
-      <div className="sm:gird sm:grid-cols-1 md:flex lg:flex font-mono " >
+      <div className="sm:gird sm:grid-cols-1 md:flex lg:flex font-mono ">
         <div className="align-center content-center mx-2">
-          <img className="h-14 w-14 shadow-lg" src={character.image} alt={character.name} />
+          <img className="h-14 w-14 shadow-lg" src={character.image} alt={character.name}/>
         </div>
         <div className="flex flex-col mx-2">
           <div>
@@ -102,7 +104,7 @@ const character = ({ character, loading, error }) => {
           <br/>
           {
             character.episode.map((episode) => {
-              return(
+              return (
                 <div key={episode.id} className="border-gray-600 border rounded px-4 py-2 my-1 shadow
                 hover:bg-black hover:text-white duration-300">
                   <Link href={`/episodes/${episode.id}`}>
@@ -127,4 +129,3 @@ const character = ({ character, loading, error }) => {
 }
 
 export default withApollo({ssr: false})(character)
-
