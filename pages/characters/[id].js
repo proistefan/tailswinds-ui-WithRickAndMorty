@@ -44,7 +44,6 @@ const character = ({ character, loading, error }) => {
 
   const router = useRouter();
 
-
   if (router.isFallback) {
     if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
     if (error) return <div>{Error.toString()}</div>
