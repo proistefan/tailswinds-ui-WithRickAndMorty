@@ -98,7 +98,7 @@ const episode = ({ episode, loading, error }) => {
         </div>
         <div className="sm:flex sm:flex-col sm:justify-center sm:content-center
          sm:items-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
-          {chars.map((data) => {
+          {episode.characters.map((data) => {
             return (
               <Card
                 heading={data.name}
