@@ -13,7 +13,7 @@ const Card = (props) => {
             {text}
           </div>
           <div className={"flex justify-center"}>
-            <img className="w-11 h-11 rounded-full mr-4 shadow-lg border-2 border-black" src={img}/>
+            <img className="w-11 h-11 rounded-full mr-4 shadow-lg border-2 border-black" src={!img ? '/rickandmorty.jpg' : img}/>
           </div>
         </div>
       </a>

@@ -2,8 +2,6 @@ import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
 import React, {useEffect, useState} from "react";
 import _, {debounce} from 'lodash';
-import apolloClient from "../apolloClient";
-import {ALL_CHARACTERS} from "../queries/characterQueries";
 
 export async function getStaticProps() {
   const ids = [...Array(591).keys()];
@@ -20,22 +18,6 @@ export async function getStaticProps() {
   }
 }
 
-// For GraphQL API - haven't figured out how to stream results
-// export async function getStaticProps(ctx) {
-//   const client = await apolloClient(ctx)
-//   const response = await client.query({
-//     query: ALL_CHARACTERS
-//   })
-//
-//   return {
-//     props: {
-//       characters: response.data.characters.results,
-//       loading: response.loading,
-//       error: !response.error ? null : response.error
-//     },
-//   }
-// }
-
 const IndexPage = ({ characters }) => {
 
   const [chars, setChars] = useState(characters);
@@ -44,8 +26,6 @@ const IndexPage = ({ characters }) => {
 
   useEffect(() => {
     const res = _.filter(chars, char => char.name.toLowerCase().includes(lookup.toLowerCase()))
-
-    // const results = chars.filter(char => char.name.toLowerCase().includes(lookup.toLowerCase()))
     setChars(res);
   }, [lookup]);
 
@@ -63,9 +43,6 @@ const IndexPage = ({ characters }) => {
     e.preventDefault()
     setChars(characters)
   };
-
-  // if (error) return <h1 className="flex justify-center">Error</h1>;
-  // if (loading) return <h1 className="flex items-center justify-center title">... Loading</h1>
 
   return (
     <div className="bg-gray-200 h-auto w-auto">

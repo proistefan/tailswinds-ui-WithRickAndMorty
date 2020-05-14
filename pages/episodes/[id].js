@@ -1,18 +1,29 @@
 import { withApollo } from '../../apollo/apollo.js';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import Card from "../../components/Card";
 import apolloClient from "../../apolloClient";
 import { ALL_EPISODE_IDS, GET_EPISODE } from "../../queries/episodeQueries";
-import _, {debounce} from "lodash";
+import useSWR from  'swr';
+import { request } from 'graphql-request';
+import gql from "graphql-tag";
 
-export async function getStaticPaths(ctx) {
-  const client = await apolloClient(ctx)
-  const response = await client.query({
-    query: ALL_EPISODE_IDS
-  })
+export async function getStaticPaths() {
+  const episodes = `
+    query{
+        episodes{
+            info{
+                count
+            }
+            results{
+                id
+        }
+    }
+}
+`
+  const response = await request('http://rickandmortyapi.com/graphql', episodes)
 
-  const { count } = response.data.episodes.info;
+  const { count } = response.episodes.info;
 
   const ids = [...Array(count).keys()];
 
@@ -23,19 +34,31 @@ export async function getStaticPaths(ctx) {
   return { paths, fallback: true }
 }
 
-export async function getStaticProps({ params }, ctx) {
-  const client = await apolloClient(ctx)
-  const response = await client.query({
-    query: GET_EPISODE,
-    variables: {id: `${params.id}`}
-  })
+export async function getStaticProps({ params }) {
+  const getEpisode = `
+    query {
+        episode(id: ${params.id}){
+            id
+            name
+            air_date
+            episode
+            characters{
+                id
+                name
+                image
+            }
+        }
+    }
+`;
 
-  const { episode } = response.data;
+  const response = await request('http://rickandmortyapi.com/graphql', getEpisode)
+
+  const { episode } = response;
 
   return {
     props: {
       episode,
-      loading: response.loading,
+      loading: !response.loading ? null : response.loading,
       error: !response.error ? null : response.error
     }
   }
@@ -43,10 +66,9 @@ export async function getStaticProps({ params }, ctx) {
 
 const episode = ({ episode, loading, error }) => {
 
-  const router = useRouter();
+  const { characters } = episode.characters;
 
-  if (loading) return <div className="flex items-center justify-center title">...Loading</div>;
-  if (error) return <div>{Error.toString()}</div>
+  const router = useRouter();
 
   if (router.isFallback) {
     return <div className="flex items-center justify-center title">Loading...</div>
@@ -94,7 +116,7 @@ const episode = ({ episode, loading, error }) => {
               <Card
                 heading={data.name}
                 text={data.status}
-                img={loading ? '/rickandmorty.jpg' : data.image}
+                img={!data ? '/rickandmorty.jpg' : data.image}
                 key={data.id}
                 id={data.id}
               />
