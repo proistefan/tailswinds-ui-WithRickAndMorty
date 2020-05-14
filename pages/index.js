@@ -1,7 +1,8 @@
 import Card from "../components/Card";
 import { withApollo } from '../apollo/apollo';
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import _, {debounce} from 'lodash';
+import DefaultCard from "../components/defaultCard";
 
 export async function getStaticProps() {
   const ids = [...Array(591).keys()];
@@ -75,13 +76,13 @@ const IndexPage = ({ characters }) => {
         <div className="sm:flex sm:flex-col sm:justify-center md:grid md:grid-cols-2 lg:grid lg:grid-cols-4">
           {chars.map((data) => {
             return (
-              <Card
-                heading={data.name}
-                text={data.status}
-                img={!data.image ? '/rickandmorty.jpg' : data.image}
-                key={data.id}
-                id={data.id}
-              />
+              chars ? <Card
+                  heading={data.name}
+                  text={data.status}
+                  img={data.image}
+                  key={data.id}
+                  id={data.id}
+                /> : <DefaultCard />
             )
           })}
         </div>

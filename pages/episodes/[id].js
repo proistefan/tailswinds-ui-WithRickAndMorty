@@ -2,6 +2,7 @@ import { withApollo } from '../../apollo/apollo.js';
 import React , { useState, useEffect }from 'react';
 import { useRouter } from 'next/router';
 import Card from "../../components/Card";
+
 import { request } from 'graphql-request';
 import _, {debounce} from "lodash";
 
