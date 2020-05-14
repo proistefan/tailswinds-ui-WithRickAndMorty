@@ -33,7 +33,6 @@ export async function getStaticProps({ params }, ctx) {
   const { episode } = response.data;
 
   return {
-    revalidate: 1,
     props: {
       episode,
       loading: response.loading,
@@ -43,8 +42,6 @@ export async function getStaticProps({ params }, ctx) {
 }
 
 const episode = ({ episode, loading, error }) => {
-
-  const { characters } = episode;
 
   const router = useRouter();
 
