@@ -65,9 +65,9 @@ export async function getStaticProps({ params }) {
   }
 }
 
-const episode = ({ episode }) => {
+const episode = ({ episode, characters }) => {
 
-  const { characters } = episode.characters;
+  console.log(characters)
 
   const router = useRouter();
 
