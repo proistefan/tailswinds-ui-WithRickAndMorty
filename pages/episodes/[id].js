@@ -57,14 +57,15 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      episode,
+      episode: !episode ? {} : episode,
+      characters: !episode ? [] : episode.characters,
       loading: !response.loading ? null : response.loading,
       error: !response.error ? null : response.error
     }
   }
 }
 
-const episode = ({ episode, loading, error }) => {
+const episode = ({ episode }) => {
 
   const { characters } = episode.characters;
 
