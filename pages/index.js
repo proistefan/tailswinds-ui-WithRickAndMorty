@@ -61,7 +61,7 @@ const IndexPage = ({ characters }) => {
       <div className="flex justify-center">
         <input
           className="shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username" type="text" placeholder="Character Search"
+          id="username" type="text" placeholder="Character Search" aria-label="Character Search Bar"
           value={lookup}
           onChange={handleChange}
         />
